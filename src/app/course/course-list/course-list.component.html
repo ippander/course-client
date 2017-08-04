@@ -1,0 +1,52 @@
+<ngb-accordion [closeOthers]="true">
+    <ngb-panel *ngFor="let course of courses | async" title="{{ course.name }}">
+        <ng-template ngbPanelContent>
+        <p class="lead">{{ course.description }}</p>
+        <ul class="list-group list-group-flush" *ngFor="let event of course.events">
+            <li class="list-group-item">
+            
+                <div class="row container-fluid">
+                    <div class="col-sm-2">
+                        {{ event.start_date | date:'dd.MM.' }} - {{ event.end_date | date:'dd.MM.' }}
+                        <div *ngIf="full(event)"><span style="color: red">TÄYNNÄ</span></div>
+                    </div>
+                    <div class="col-sm-2">
+                        {{ weekday(event.weekday) }}
+                       {{ event.start_time }} - {{ event.end_time}}
+                    </div>
+                    <div class="col-sm-2">
+                        {{ event.place }}, {{ event.address }}
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <div *ngIf="(swimmers | async).length > 0 ">
+                            <b>Ilmoita kurssille</b>
+                            <span *ngFor="let swimmer of swimmers | async">
+                                <br>
+                                <input
+                                    type="checkbox"
+                                    (change)="enroll($event, course, event, swimmer)"
+                                    [checked]="enrolled(event.id, swimmer.id)"
+                                    [disabled]="allreadyEnrolled(event.id, swimmer.id)"
+                                    >
+                                    {{ swimmer.first_name }} {{ swimmer.last_name }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <p>{{ event.notes }}</p>
+                    </div>
+
+
+                    <!-- <div class="row"> -->
+                    <!-- </div> -->
+
+                    <div class="col-sm-1"><span class="float-right no-wrap"><b>{{ event.price.replace('.', ',') }}&nbsp;€</b></span></div>
+
+                </div>
+            </li>
+        </ul>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>

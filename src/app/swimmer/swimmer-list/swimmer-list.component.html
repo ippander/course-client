@@ -1,0 +1,29 @@
+<ngb-accordion [closeOthers]="true">
+    <ngb-panel *ngFor="let swimmer of swimmers | async"
+    	id="swimmer-{{ swimmer.id }}" title="{{ swimmer.first_name }} {{ swimmer.last_name }}">
+        <ng-template ngbPanelContent>
+        	<swimmer-detail
+        		[account_id]=account_id
+        		[id]=swimmer.id
+        		[first_name]=swimmer.first_name
+        		[last_name]=swimmer.last_name
+        		[birthday]=swimmer.birthday
+                [notes]=swimmer.notes
+        		>
+        	</swimmer-detail>
+		</ng-template>
+	</ngb-panel>
+    <ngb-panel title="Lisää kurssilainen ...">
+        <ng-template ngbPanelContent>
+        	<swimmer-detail
+        		[account_id]=account_id
+        		[id]=''
+        		[first_name]=''
+        		[last_name]=''
+        		[birthday]=''
+                [notes]=''
+        		>
+        	</swimmer-detail>
+		</ng-template>
+	</ngb-panel>
+</ngb-accordion>

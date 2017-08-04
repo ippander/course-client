@@ -1,0 +1,13 @@
+<h3>Ilmoittautumisesi</h3>
+<p class="lead">Olet ilmoittautunut seuraaville kursseille</p>
+<div *ngFor="let enrollment of enrollments">
+	<div class="row">
+	<div class="col-sm-4">
+			<p><b>{{ enrollment.swimmer.first_name }} {{ enrollment.swimmer.last_name }}</b></p>
+	</div>
+	<div class="col-sm-8">
+		<p><b>{{ enrollment.course.name }}</b> {{ weekday(enrollment.event.weekday) }} {{ enrollment.event.place }}
+		klo {{ enrollment.event.start_time }} - {{ enrollment.event.end_time }}
+		alkaen {{ enrollment.event.start_date.split('-').reverse().join('.') }}</p>
+	</div>
+</div>

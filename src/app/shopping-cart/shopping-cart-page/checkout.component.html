@@ -1,0 +1,78 @@
+<div class="container-fluid">
+
+	<button class="btn btn-primary" (click)="sendEnrollments()">Ilmoittaudu valituille kursseille</button>
+
+	<h3 style="margin-bottom: 0.5em; margin-top: 0.5em;">Valitut kurssit</h3>
+
+	<p class="lead">
+		HUOM! Tämä laskelma <b>ei sisällä sisaralennuksia</b>. Ne otetaan huomioon lopullisessa laskussa, jonka saat
+		viikon sisällä sähkopostiisi.
+	</p>
+
+	<div class="container-fluid">
+
+		<div *ngFor="let swimmer of enrolledNonMembers()">
+
+			<div class="row">
+				<div class="col-sm-3"><h6>{{ swimmer.first_name }} {{ swimmer.last_name }}</h6></div>
+
+				<div class="col-sm-6">
+					<span class="float-left">Jäsenyys</span>
+				</div>
+				<div class="col-sm-3">
+					<span class="float-right">28,00 €</span>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12"><hr /></div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12"><span class="float-right">Jäsenyydet yhteensä {{ totalMemberships() / 100 }} €</span></div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12"><hr /></div>
+		</div>
+
+		<div *ngFor="let enrollment of shoppingCart">
+
+			<div class="row">
+				<div class="col-sm-3"><h6>{{ enrollment.swimmer.first_name }} {{ enrollment.swimmer.last_name }}</h6></div>
+
+				<div class="col-sm-6">
+					<span class="float-left">{{ enrollment.course.name }}, {{ weekday(enrollment.event.weekday) }} {{ enrollment.event.place }}</span>
+				</div>
+				<div class="col-sm-3">
+					<span class="float-right">{{ enrollment.event.price.replace('.', ',') }} €</span>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12"><hr /></div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12"><span class="float-right">Kurssit yhteensä {{ totalCourses() / 100 }} €</span></div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12"><hr /></div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12"><span class="float-right">Yhteensä {{ total() / 100 }} €</span></div>
+		</div>
+
+	</div>
+
+	<button class="btn btn-primary" (click)="sendEnrollments()">Ilmoittaudu valituille kursseille</button>
+
+</div>

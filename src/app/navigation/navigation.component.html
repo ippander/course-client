@@ -1,0 +1,21 @@
+<nav class="navbar navbar-fixed-top">
+<div class="container-fluid">
+		<span class="float-right"><shopping-cart></shopping-cart></span>
+</div>
+	<div class="container-fluid text-center">
+		<!-- <span style="background: 'http://aurajoenuinti.fi/images/Kuvat/logo/aurajoenuinti_logo.png'"></span> -->
+		<a class="navbar-brand">
+			Kurssi-ilmoittautuminen
+		</a>
+		<ul *ngIf="loggedIn()" class="nav navbar-nav">
+			<li><a routerLink="/customer">Laskutustiedot</a></li>
+			<li><a routerLink="/swimmer-list">Uimarit</a></li>
+			<li><a routerLink="/courses">Kurssit</a></li>
+			<li><a routerLink="/view-enrollments">Ilmoittautumisesi</a></li>
+		</ul>
+		<ul *ngIf="!loggedIn()" class="nav navbar-nav">
+			<li><a routerLink="/login">Kirjaudu sisään tai rekisteröidy</a></li>
+			<li><a routerLink="/courses">Kurssit</a></li>
+		</ul>
+	</div>
+</nav>
