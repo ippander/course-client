@@ -8,7 +8,13 @@ import { Observable } from 'rxjs/Observable'
 
 @Component({
 	selector: 'navigation-component',
-	templateUrl: './navigation.component.html'
+	templateUrl: './navigation.component.html',
+	styles: [
+	'.navbar { background-color: #fff; font-weight: bold; }',
+	'.shopping-cart-right { padding-right: 20px; position: relative; z-index: 10; }',
+	'.navbar-nav { flex-direction: row }',
+	'.navbar-nav li { padding-right: 40px }'
+	]
 })
 export class NavigationComponent implements OnInit {
 
