@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Customer, CustomerService } from '../service'
 
@@ -10,13 +11,20 @@ import { Observable } from 'rxjs/Observable'
 	selector: 'navigation-component',
 	templateUrl: './navigation.component.html',
 	styles: [
-	'.navbar { background-color: #fff; font-weight: bold; }',
+	'.navbar { background-color: #fff }',
 	'.shopping-cart-right { padding-right: 20px; position: relative; z-index: 10; }',
-	'.navbar-nav { flex-direction: row }',
-	'.navbar-nav li { padding-right: 40px }'
+	// '.navbar-nav { flex-direction: row }',
+	// '.navbar-nav li { padding-right: 40px }'
+	'.nav-link { font-weight: bold; color: #0275d8 !important; }'
 	]
 })
 export class NavigationComponent implements OnInit {
+
+	isCollapsed = true
+
+	toggleState() {
+		this.isCollapsed = !this.isCollapsed
+	}
 
 	@select() customer$: Observable<Customer>
 	customer: Customer

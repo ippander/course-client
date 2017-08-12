@@ -69,8 +69,8 @@ export const ActionTypes = {
 @Injectable()
 export class SessionActions {
 
-  // private endPoint = 'http://localhost/api'
-  private endPoint = 'http://aurajoenuinti.fi/courses/courses_new/api'
+  private endPoint = 'http://localhost/api'
+  // private endPoint = 'http://aurajoenuinti.fi/courses/courses_new/api'
   private headers = new Headers({ 'Content-Type': 'application/json' });
 
   constructor (private http: Http, private store: NgRedux<AppState>, private router: Router) {}
