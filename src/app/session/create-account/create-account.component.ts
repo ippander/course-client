@@ -10,10 +10,9 @@ import { SessionActions } from '../../redux/actions'
     selector: 'create-account',
     templateUrl: './create-account.component.html'
 })
- 
 export class CreateAccountComponent implements OnInit {
 
-    @select() customer$: Observable<Customer>
+    @select(state => state.session.customer) customer$: Observable<Customer>
     customer: Customer
 
     constructor(private actions: SessionActions) {

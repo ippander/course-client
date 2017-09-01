@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable'
 })
 export class CustomerDetailComponent implements OnInit {
 
-	@select() customer$: Observable<Customer>
+	@select(state => state.session.customer) customer$: Observable<Customer>
 	customer: Customer
 
 	constructor(private actions: SessionActions) {

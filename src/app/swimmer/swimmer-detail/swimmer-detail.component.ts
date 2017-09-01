@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Swimmer } from '../../service'
 import { SessionActions } from '../../redux/actions'
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap"
 
 @Component({
   selector: 'swimmer-detail',
@@ -12,14 +13,14 @@ export class SwimmerDetailComponent {
   @Input() account_id: string
   @Input() first_name: string
   @Input() last_name: string
-  @Input() birthday: string
+  @Input() birthday: NgbDateStruct
   @Input() notes: string
 
   constructor(private actions: SessionActions) { }
 
   save() {
 
-    let bd: string = this.birthday.split('.').reverse().join('-')
+    // let bd: string = this.birthday.split('.').reverse().join('-')
 
     if (this.id) {
       this.actions.updateSwimmer(new Swimmer({

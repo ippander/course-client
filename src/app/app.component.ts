@@ -4,7 +4,6 @@ import { CourseService } from './course/shared/course.service';
 import { SessionActions } from './redux/actions'
 
 import { NgRedux, select, DevToolsExtension } from '@angular-redux/store';
-// import { AppState, INITIAL_STATE, sessionReducer } from './redux/reducers';
 
 @Component({
   selector: 'app-root',

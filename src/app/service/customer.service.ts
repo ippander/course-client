@@ -29,7 +29,7 @@ export class CustomerService {
       console.log('hep')
     }
 
-    return appStore.customer
+    return appStore.session.customer
   }
 
   // getCustomerById(id: number): Observable<Customer> {

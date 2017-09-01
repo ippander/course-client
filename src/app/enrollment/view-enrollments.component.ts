@@ -15,8 +15,8 @@ import { toWeekday } from '../common'
 })
 export class ViewEnrollmentsComponent implements OnInit {
 
-	@select() customer$: Observable<Customer>
-	@select() enrollments$: Observable<Enrollment[]>
+	@select(state => state.session.customer) customer$: Observable<Customer>
+	@select(state => state.courses.enrollments) enrollments$: Observable<Enrollment[]>
 	enrollments: Enrollment[]
 	customer: Customer
 

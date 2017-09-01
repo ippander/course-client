@@ -1,8 +1,10 @@
 <div class="container" *ngIf="customer">
-	<form>
+	<form (ngSubmit)="save()" #detailForm="ngForm">
+
 		<div class="panel panel-default">
 			<div class="panel-heading"><span class="fa fa-address-card-o"></span> Laskutustiedot</div>
 			<div class="panel-body">
+
 				<div class="input-group">
 					<span class="input-group-addon fa fa-user"></span>
 					<input
@@ -11,7 +13,17 @@
 						name="first_name"
 						placeholder="Etunimi"
 						[(ngModel)]="customer.first_name"
-						required>
+						required
+						#first_name="ngModel"
+						>
+				</div>
+
+				<div *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)"
+				     class="alert alert-danger">
+
+					<div *ngIf="first_name.errors.required">
+				    	Etunimi on vaadittu tieto.
+				    </div>
 				</div>
 
 				<div class="input-group">
@@ -22,18 +34,41 @@
 						name="last_name"
 						placeholder="Sukunimi"
 						[(ngModel)]="customer.last_name"
-						required>
+						required
+						#last_name="ngModel">
+				</div>
+
+				<div *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)"
+				     class="alert alert-danger">
+
+					<div *ngIf="last_name.errors.required">
+				    	Sukunimi on vaadittu tieto.
+				    </div>
 				</div>
 
 				<div class="input-group">
 					<span class="input-group-addon fa fa-address-card-o"></span>
 					<input
 						class="form-control"
-						type="text"
+						type="email"
 						name="email"
-						placeholder="Sukunimi"
+						placeholder="Sähköpostiosoite"
 						[(ngModel)]="customer.email"
-						required>
+						required
+						#email="ngModel"
+						email>
+				</div>
+
+				<div *ngIf="email.invalid && (email.dirty || email.touched)"
+				     class="alert alert-danger">
+
+					<div *ngIf="email.errors.required">
+				    	Sähköpostiosoite on vaadittu tieto.
+				    </div>
+
+				    <div *ngIf="email.hasError">
+				    	Tarkasta sähköpostiosoitteen muoto.
+				    </div>
 				</div>
 
 <!-- 				<div class="input-group">
@@ -55,7 +90,17 @@
 						name="street_address"
 						placeholder="Katuosoite"
 						[(ngModel)]="customer.street_address"
-						required>
+						required
+						#street_address="ngModel"
+						>
+				</div>
+
+				<div *ngIf="street_address.invalid && (street_address.dirty || street_address.touched)"
+				     class="alert alert-danger">
+
+					<div *ngIf="street_address.errors.required">
+				    	Katuosoite on vaadittu tieto.
+				    </div>
 				</div>
 
 				<div class="input-group">
@@ -66,7 +111,21 @@
 						name="zipcode"
 						placeholder="Postinumero"
 						[(ngModel)]="customer.zipcode"
-						required>
+						required
+						#zipcode="ngModel"
+						pattern="[0-9]{5}">
+				</div>
+
+				<div *ngIf="zipcode.invalid && (zipcode.dirty || zipcode.touched)"
+				     class="alert alert-danger">
+
+					<div *ngIf="zipcode.errors.required">
+				    	Postinumero on vaadittu tieto.
+				    </div>
+
+				    <div *ngIf="zipcode.hasError">
+				    	Tarkasta postinumeron muoto.
+				    </div>
 				</div>
 
 				<div class="input-group">
@@ -77,10 +136,24 @@
 						name="post_office"
 						placeholder="Postitoimipaikka"
 						[(ngModel)]="customer.post_office"
-						required>
+						required
+						#post_office="ngModel"
+						>
 				</div>
+
+				<div *ngIf="post_office.invalid && (post_office.dirty || post_office.touched)"
+				     class="alert alert-danger">
+
+					<div *ngIf="post_office.errors.required">
+				    	Postitoimipaikka on vaadittu tieto.
+				    </div>
+				</div>
+
 			</div>
 		</div>
-		<button type="button" class="btn btn-primary" (click)="save()">Tallenna</button>
+		<div>
+			<button type="submit" class="btn btn-primary" [disabled]="!detailForm.form.valid">Tallenna</button>
+			<span class="alert alert-success fa fa-thumbs-o-up"></span>
+		</div>
 	</form>
 </div>

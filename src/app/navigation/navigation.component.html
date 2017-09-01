@@ -1,5 +1,4 @@
 <nav class="navbar navbar-toggleable-md navbar-light fixed-top bg-faded">
-	<!-- <div class="container"> -->
 		<button
 			class="navbar-toggler navbar-toggler-left"
 			type="button"
@@ -19,7 +18,6 @@
 			[attr.aria-expanded]="isCollapsed"
 			[ngClass]="{ 'show': !isCollapsed }"
 			>
- 			<!-- <a class="navbar-brand">Ilmo</a> -->
  			<ul *ngIf="loggedIn()" class="navbar-nav">
 				<li class="nav-item active">
 					<a class="nav-link" routerLink="/courses">Kurssit</a>
@@ -38,7 +36,6 @@
 						<span class="fa fa-sign-out"></span>
 					</a>
 				</li>
-				<!-- <li class="float-right"><a>Kirjaudu ulos</a></li>				 -->
 			</ul>
 			<ul *ngIf="!loggedIn()" class="navbar-nav mr-auto mt-2 mt-lg-0">
 				<li class="nav-item active">
@@ -46,7 +43,6 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" routerLink="/login">
-					<!-- <span class="fa fa-sign-in"></span> -->
 						Kirjaudu sisään
 					</a>
 				</li>
@@ -58,59 +54,3 @@
 			</li>
 		</ul>
 </nav>
-		<!-- <span class="float-right"><shopping-cart></shopping-cart></span> -->
-
-<!-- <nav class="navbar navbar-toggleable-md navbar-light fixed-top bg-faded">
-	<div class="container">
-
-		<button
-			class="navbar-toggler navbar-toggler-left"
-			type="button"
-			data-toggle="collapse"
-			data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent"
-			[attr.aria-expanded]="isCollapsed"
-			aria-label="Toggle navigation"
-			(click)="toggleState()"
-			[ngClass]="{ 'collapsed': isCollapsed }"
-			>
-			
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="navbar-collapse collapse" id="navbarSupportedContent"
-			[attr.aria-expanded]="isCollapsed"
-			[ngClass]="{ 'show': !isCollapsed }"
-			>
- 			<a class="navbar-brand">Ilmo</a>
- 			<ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<a routerLink="/courses">Kurssit</a>
-				</li>
-				<li class="nav-item">
-					<a routerLink="/swimmer-list">Uimarit</a>
-				</li>
-				<li class="nav-item">
-					<a routerLink="/customer">Laskutustiedot</a>
-				</li>
-				<li class="nav-item">
-					<a routerLink="/view-enrollments">Ilmoittautumisesi</a>
-				</li>
-				<li class="nav-item">
-					<a routerLink="/login">
-						<span class="fa fa-sign-out"></span>
-					</a>
-				</li>
-			</ul>
-			<ul *ngIf="!loggedIn()" class="navbar-nav mr-auto">
-				<li class="nav-item active"><a routerLink="/courses">Kurssit</a></li>
-				<li class="nav-item">
-					<a routerLink="/login">
-						Kirjaudu sisään
-					</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-</nav>
- -->

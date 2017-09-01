@@ -16,11 +16,11 @@ import { toWeekday } from '../../common'
 })
 export class CourseListComponent implements OnInit {
 
-  @select() readonly courses: Observable<Course[]>
-  @select() readonly swimmers: Observable<Swimmer[]>
-  @select() readonly shoppingCart$: Observable<Enrollment[]>
-  @select() readonly enrollments$: Observable<Enrollment[]>
-  @select() readonly customer$: Observable<Customer>
+  @select(state => state.courses.courses) readonly courses: Observable<Course[]>
+  @select(state => state.session.swimmers) readonly swimmers: Observable<Swimmer[]>
+  @select(state => state.courses.shoppingCart) readonly shoppingCart$: Observable<Enrollment[]>
+  @select(state => state.courses.enrollments) readonly enrollments$: Observable<Enrollment[]>
+  @select(state => state.session.customer) readonly customer$: Observable<Customer>
 
   shoppingCart: Enrollment[]
   enrollments: Enrollment[]

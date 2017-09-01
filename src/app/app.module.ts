@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { RouterModule, Routes } from '@angular/router';
+import { routing, AuthGuard } from './routes'
 
 import { AppComponent } from './app.component';
 import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
@@ -21,11 +22,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdDatepickerI18n } from '../datepicker-i18n'
 
 import { NgReduxModule, NgRedux, DevToolsExtension } from '@angular-redux/store';
+import { NgReduxRouterModule, NgReduxRouter } from '@angular-redux/router'
 
-import { AppState, INITIAL_STATE, sessionReducer } from './redux/reducers'
-import { SessionActions } from './redux/actions'
+import { AppState, rootReducer, INITIAL_APP_STATE } from './redux/reducers'
 import { createLogger } from 'redux-logger'
-
+import { apiMiddleware } from 'redux-api-middleware'
+import thunk from 'redux-thunk'
 // import { appStoreProviders, createAppStore } from './redux/reducers';
 
 
@@ -48,34 +50,38 @@ import { createLogger } from 'redux-logger'
     NgbModule.forRoot(),
     // NgbCollapse,
     BrowserModule,
+    routing,
     FormsModule,
     HttpModule,
     NgReduxModule,
-    RouterModule.forRoot([
-      { path: 'login', component: LoginComponent },
-      { path: 'create-account', component: CreateAccountComponent },
-      { path: 'customer', component: CustomerDetailComponent },
-      { path: 'swimmer-list', component: SwimmerListComponent },
-      { path: 'swimmer-detail', component: SwimmerDetailComponent },
-      { path: 'courses', component: CourseListComponent },      
-      { path: 'checkout-cart', component: CheckoutComponent },
-      { path: 'view-enrollments', component: ViewEnrollmentsComponent }
-    ],
-    { enableTracing: true }
-    )
+    NgReduxRouterModule
+    // ([
+    //   { path: 'login', component: LoginComponent },
+    //   { path: 'create-account', component: CreateAccountComponent },
+    //   { path: 'customer', component: CustomerDetailComponent },
+    //   { path: 'swimmer-list', component: SwimmerListComponent },
+    //   { path: 'swimmer-detail', component: SwimmerDetailComponent },
+    //   { path: 'courses', component: CourseListComponent },      
+    //   { path: 'checkout-cart', component: CheckoutComponent },
+    //   { path: 'view-enrollments', component: ViewEnrollmentsComponent }
+    // ],
+    // { enableTracing: true }
+    // )
   ],
   // providers: [ appStoreProviders ],
-  providers: [ SessionActions ],
+  providers: [ AuthGuard ],
   bootstrap: [AppComponent]
 })
 
 export class AppModule {
-  constructor(ngRedux: NgRedux<AppState>, devTools: DevToolsExtension) {
+
+  constructor(ngRedux: NgRedux<AppState>, ngReduxRouter: NgReduxRouter, devTools: DevToolsExtension) {
 
     const storeEnhancers = devTools.isEnabled() ? // <- New
       [ devTools.enhancer() ] : // <- New
       []; // <- New
 
-    ngRedux.configureStore(sessionReducer, INITIAL_STATE, [createLogger()], storeEnhancers);
+    ngRedux.configureStore(rootReducer, INITIAL_APP_STATE, [ thunk, apiMiddleware, createLogger()], storeEnhancers)
+    ngReduxRouter.initialize()
   }
 }

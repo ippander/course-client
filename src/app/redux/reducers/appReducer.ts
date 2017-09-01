@@ -1,9 +1,7 @@
-// import { Reducer, Store, createStore, StoreEnhancer, compose } from 'redux';
 import { Customer, Swimmer, Course, CourseEvent } from '../../service'
 import { NgRedux, DevToolsExtension } from '@angular-redux/store';
 
 import {
-  // Userdata,
   Actions,
   ActionTypes,
   LoginAction,
@@ -18,35 +16,23 @@ export interface Enrollment {
   event: CourseEvent
 }
 
-export interface AppState {
+export interface CourseState {
   customer: Customer,
   swimmers: Swimmer[],
   courses: Course[],
-  shoppingCart: Enrollment[]
+  shoppingCart: Enrollment[],
 }
 
-export const INITIAL_STATE: AppState = {
+export const INITIAL_COURSE_STATE: CourseState = {
   customer: {} as Customer,
   swimmers: [] as Swimmer[],
   courses: [] as Course[],
-  shoppingCart: [] as Enrollment[]
+  shoppingCart: [] as Enrollment[],
 }
 
-export const sessionReducer = (state: AppState, action: Actions): AppState => {
+export const appReducer = (state = INITIAL_COURSE_STATE, action: Actions): CourseState => {
 
   switch(action.type) {
-
-    case ActionTypes.LOGIN:
-    	return {
-        ...state,
-    		customer: action.payload as Customer,
-        swimmers: action.payload['swimmers'] as Swimmer[]
-    	}
-
-    case ActionTypes.LOGOUT:
-      return {
-        ...INITIAL_STATE
-      }
 
     case ActionTypes.RECEIVE_COURSES:
       return {
@@ -55,22 +41,13 @@ export const sessionReducer = (state: AppState, action: Actions): AppState => {
       }
 
     case ActionTypes.UPDATE_CUSTOMER:
+      let cust = action.payload as Customer
       return {
         ...state,
-        customer: action.payload as Customer
+        customer: cust,
+        // Update also the swimmer data for customer
+        swimmers: state.swimmers.map(s => s.id === cust.id ? new Swimmer(cust) : s)
       }
-
-    case ActionTypes.REGISTER:
-
-      let customer = action.payload as Customer
-      let swimmer = new Swimmer(customer)
-
-      return {
-        ...state,
-        customer: customer,
-        swimmers: [ swimmer ]
-      }
-
 
      case ActionTypes.UPDATE_SWIMMER:
      case ActionTypes.CREATE_SWIMMER:

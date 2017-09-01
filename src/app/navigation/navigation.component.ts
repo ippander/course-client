@@ -13,8 +13,6 @@ import { Observable } from 'rxjs/Observable'
 	styles: [
 	'.navbar { background-color: #fff }',
 	'.shopping-cart-right { padding-right: 20px; position: relative; z-index: 10; }',
-	// '.navbar-nav { flex-direction: row }',
-	// '.navbar-nav li { padding-right: 40px }'
 	'.nav-link { font-weight: bold; color: #0275d8 !important; }'
 	]
 })
@@ -26,7 +24,7 @@ export class NavigationComponent implements OnInit {
 		this.isCollapsed = !this.isCollapsed
 	}
 
-	@select() customer$: Observable<Customer>
+	@select(state => state.session.customer) customer$: Observable<Customer>
 	customer: Customer
 
 	constructor(private actions: SessionActions) {

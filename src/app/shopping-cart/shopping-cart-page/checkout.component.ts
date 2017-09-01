@@ -17,9 +17,9 @@ export class CheckoutComponent implements OnInit {
 
 	MEMBERSHIP_PRICE: number = 28
 
-	@select() shoppingCart$: Observable<Enrollment[]>
-	@select() swimmers$: Observable<Swimmer[]>	
-	@select() customer$: Observable<Customer>	
+	@select(state => state.courses.shoppingCart) shoppingCart$: Observable<Enrollment[]>
+	@select(state => state.session.swimmers) swimmers$: Observable<Swimmer[]>	
+	@select(state => state.session.customer) customer$: Observable<Customer>	
 
 	shoppingCart: Enrollment[]
 	swimmers: Swimmer[]

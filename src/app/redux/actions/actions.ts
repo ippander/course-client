@@ -11,13 +11,15 @@ import 'rxjs/add/operator/map'
 import { NgRedux } from '@angular-redux/store'
 
 import { Router, ActivatedRoute } from '@angular/router';
+import { RSAA } from 'redux-api-middleware'
 
 export interface PayloadAction extends Redux.Action {
   payload: any;
 }
 
 export class LoginAction implements PayloadAction {
-  public readonly type = ActionTypes.LOGIN
+  public readonly type = ActionTypes.LOGIN;
+  routes: any
   constructor(public payload: Customer) {}
 }
 
@@ -52,6 +54,7 @@ export class SendEnrollmentsAction implements PayloadAction {
 }
 
 export const ActionTypes = {
+  
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
   REGISTER: 'REGISTER',
@@ -63,7 +66,9 @@ export const ActionTypes = {
   ENROLL: 'ENROLL',
   CANCEL_ENROLLMENT: 'CANCEL_ENROLLMENT',
   SEND_ENROLLMENTS: 'SEND_ENROLLMENTS',
-  RECEIVE_ENROLLMENTS: 'RECEIVE_ENROLLMENTS'
+  RECEIVE_ENROLLMENTS: 'RECEIVE_ENROLLMENTS',
+  REQUEST: 'REQUEST',
+  FAILURE: 'FAILURE'
 }
 
 @Injectable()
@@ -74,6 +79,32 @@ export class SessionActions {
   private headers = new Headers({ 'Content-Type': 'application/json' });
 
   constructor (private http: Http, private store: NgRedux<AppState>, private router: Router) {}
+
+  login(username = '', password = ''): RSAA {
+
+    let url = `${this.endPoint}/login`
+
+    return dispatch => { dispatch({
+        [RSAA]: {
+          endpoint: url,
+          method: 'POST',
+          bailout: () => { return this.store.getState().session.customer.id },
+          body: JSON.stringify({ username: username, password: password }),
+          types: [
+            ActionTypes.REQUEST,
+            {
+              type: ActionTypes.LOGIN,
+              payload: (action, state, res) => {
+                return res.json().then(json => {
+                  dispatch({ type: "@angular-redux/router::UPDATE_LOCATION", payload: "/swimmer-list" })
+                  return json
+                })
+              },
+            },
+            ActionTypes.FAILURE
+          ]
+        }})}
+  }
 
   fetchEnrollments(accountId: number) {
 
@@ -118,14 +149,14 @@ export class SessionActions {
   enroll(enrollment: Enrollment) {
     this.store.dispatch({
       type: ActionTypes.ENROLL,
-      payload: this.store.getState().shoppingCart.concat([ enrollment ])
+      payload: this.store.getState().courses.shoppingCart.concat([ enrollment ])
     })
   }
 
   cancelEnrollment(enrollment: Enrollment) {
     this.store.dispatch({
       type: ActionTypes.CANCEL_ENROLLMENT,
-      payload: this.store.getState().shoppingCart.filter(
+      payload: this.store.getState().courses.shoppingCart.filter(
         e => e.swimmer.id !== enrollment.swimmer.id || e.event.id !== enrollment.event.id
       )
     })
@@ -146,7 +177,7 @@ export class SessionActions {
 
       return {
         type: ActionTypes.CREATE_SWIMMER,
-        payload: this.store.getState().swimmers.filter(s => s.id !== sw.id).concat(sw)
+        payload: this.store.getState().session.swimmers.filter(s => s.id !== sw.id).concat(sw)
       }
     })
     .subscribe(action => this.store.dispatch(action))
@@ -163,10 +194,9 @@ export class SessionActions {
     .map((res: Response) => res.json())
     .map(json => {
 
-      // return new UpdateSwimmerAction(swimmer)
       return {
         type: ActionTypes.UPDATE_SWIMMER,
-        payload: this.store.getState().swimmers.filter(s => s.id !== swimmer.id).concat(swimmer)
+        payload: this.store.getState().session.swimmers.filter(s => s.id !== swimmer.id).concat(swimmer)
       }
     })
     .subscribe(action => this.store.dispatch(action))
@@ -211,35 +241,22 @@ export class SessionActions {
     .subscribe(action => this.store.dispatch(action))
   }
 
-  login(username = '', password = '') {
-
-    let url = `${this.endPoint}/login`
-
-    if (this.store.getState().customer.id) {
-      this.store.dispatch({
-        type: ActionTypes.LOGIN,
-        payload: this.store.getState().customer
-      })
-      return
-    }
-
-    return this.http.post(
-      url,
-      JSON.stringify({ username: username, password: password }),
-      { headers: this.headers }
-      )
-      .map((res: Response) => res.json())
-      .map(json => {
-        return {
-          type: ActionTypes.LOGIN,
-          payload: new Customer(json)
-        }
-      })
-      .subscribe(action => {
-        this.store.dispatch(action)
-        this.router.navigate(['courses'])
-      })
-  }
+    // return this.http.post(
+    //   url,
+    //   JSON.stringify({ username: username, password: password }),
+    //   { headers: this.headers }
+    //   )
+    //   .map((res: Response) => res.json())
+    //   .map(json => {
+    //     return {
+    //       type: ActionTypes.LOGIN,
+    //       payload: new Customer(json)
+    //     }
+    //   })
+    //   .subscribe(action => {
+    //     this.store.dispatch(action)
+    //     this.router.navigate(['courses'])
+    //   })
 
   fetchCurrentCourses() {
 

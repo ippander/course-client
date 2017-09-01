@@ -1,21 +1,27 @@
-<div [(ngModel)]="language" ngbRadioGroup>
-  <label class="btn btn-primary">
-    <input type="radio" value="en"> English
-  </label>
-  <label class="btn btn-primary">
-    <input type="radio" value="fr"> Français
-  </label>
-</div>
-<hr>
-
-<form class="form-inline">
-  <div class="form-group">
     <div class="input-group">
-      <input class="form-control" placeholder="yyyy-mm-dd"
-             name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-      <div class="input-group-addon" (click)="d.toggle()" >
-        <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+      <span class="input-group-addon fa fa-calendar" (click)="d.toggle()"></span>
+      <input
+        class="form-control"
+        placeholder="Syntymäaika (pp.kk.vvvv)"
+              ngbDatepicker
+              [(ngModel)]="model"
+              #d="ngbDatepicker"
+              required
+              />
+    </div>
+
+<!--               name="birthday"
+              [(ngModel)]="birthday"
+ -->
+    <div *ngIf="d && d.errors && (d.dirty || d.touched)" class="alert alert-danger">
+      <div *ngIf="!d.errors.required">
+        Name is required
+      </div>
+      <div *ngIf="!d.errors.minlength">
+        Name must be at least 4 characters long.
+      </div>
+      <div *ngIf="!d.errors.maxlength">
+        Name cannot be more than 24 characters long.
       </div>
     </div>
-  </div>
-</form>
+

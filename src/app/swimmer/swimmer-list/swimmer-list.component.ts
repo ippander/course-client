@@ -10,8 +10,8 @@ import { Observable } from 'rxjs/Observable'
 })
 export class SwimmerListComponent implements OnInit {
 
-	@select() swimmers: Observable<Swimmer[]>
-  @select() customer: Observable<Customer>
+	@select(state => state.session.swimmers) swimmers: Observable<Swimmer[]>
+  @select(state => state.session.customer) customer: Observable<Customer>
   account_id: number
 
   constructor(private store: NgRedux<AppState>) {

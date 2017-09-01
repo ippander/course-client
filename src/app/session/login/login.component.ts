@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
- 
+import { NgRedux } from '@angular-redux/store'
+import { AppState } from '../../redux/reducers'
 import { SessionActions } from '../../redux/actions'
  
 @Component({
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
     loading = false
     returnUrl: string
  
-    constructor(private actions: SessionActions) { }
+    constructor(private actions: SessionActions, private store: NgRedux<AppState>) { }
  
     ngOnInit() {
         // reset login status
@@ -25,20 +26,7 @@ export class LoginComponent implements OnInit {
     }
  
     login() {
-
-        this.actions.login(this.model.username, this.model.password)
-        // this.authenticationService.login(
-        //     this.model.username, this.model.password
-        // )
-        // this.loading = true;
-        // this.authenticationService.login(this.model.username, this.model.password)
-        //     .subscribe(
-        //         data => {
-        //             this.router.navigate([this.returnUrl]);
-        //         },
-        //         error => {
-        //             this.alertService.error(error);
-        //             this.loading = false;
-        //         });
+        this.store.dispatch(this.actions.login(this.model.username, this.model.password))
+        // this.actions.login(this.model.username, this.model.password)
     }
 }
