@@ -21,6 +21,7 @@ export interface CourseState {
   swimmers: Swimmer[],
   courses: Course[],
   shoppingCart: Enrollment[],
+  enrollments: Enrollment[]
 }
 
 export const INITIAL_COURSE_STATE: CourseState = {
@@ -28,6 +29,7 @@ export const INITIAL_COURSE_STATE: CourseState = {
   swimmers: [] as Swimmer[],
   courses: [] as Course[],
   shoppingCart: [] as Enrollment[],
+  enrollments: [] as Enrollment[],
 }
 
 export const appReducer = (state = INITIAL_COURSE_STATE, action: Actions): CourseState => {
@@ -73,12 +75,13 @@ export const appReducer = (state = INITIAL_COURSE_STATE, action: Actions): Cours
       return {
         ...state,
         shoppingCart: [],
-        enrollments: action.payload as Enrollment[]
+        // enrollments: action.payload as Enrollment[]
       }
 
     case ActionTypes.RECEIVE_ENROLLMENTS:
       return {
         ...state,
+        // shoppingCart: action.payload as Enrollment[]
         enrollments: action.payload as Enrollment[]
       }
 

@@ -1,6 +1,6 @@
 import { Component, Injectable, Input } from '@angular/core'
-import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap'
-import { NgbDatepickerConfig, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap'
+import { NgbDatepickerI18n, NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap'
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap'
 
 const I18N_VALUES = {
   en: {

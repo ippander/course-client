@@ -84,7 +84,9 @@ export class SessionActions {
 
     let url = `${this.endPoint}/login`
 
-    return dispatch => { dispatch({
+    return dispatch => {
+      console.log('asdf')
+      dispatch({
         [RSAA]: {
           endpoint: url,
           method: 'POST',

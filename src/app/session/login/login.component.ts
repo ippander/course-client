@@ -5,7 +5,6 @@ import { AppState } from '../../redux/reducers'
 import { SessionActions } from '../../redux/actions'
  
 @Component({
-    moduleId: module.id,
     templateUrl: 'login.component.html'
 })
  
